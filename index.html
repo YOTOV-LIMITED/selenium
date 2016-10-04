@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Selenium by YOTOV-LIMITED</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Selenium</h1>
+      <h2 class="project-tagline">A browser automation framework and ecosystem.</h2>
+      <a href="https://github.com/YOTOV-LIMITED/selenium" class="btn">View on GitHub</a>
+      <a href="https://github.com/YOTOV-LIMITED/selenium/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/YOTOV-LIMITED/selenium/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="selenium" class="anchor" href="#selenium" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Selenium</h1>
+
+<p>Selenium is an umbrella project encapsulating a variety of tools and 
+libraries enabling web browser automation. Selenium specifically 
+provides infrastructure for the <a href="https://dvcs.w3.org/hg/webdriver/raw-file/tip/webdriver-spec.html">W3C WebDriver specification</a> 
+— a platform and language-neutral coding interface compatible with all 
+major web browsers.</p>
+
+<p>The project is made possible by volunteer contributors who've 
+generously donated thousands of hours in code development and upkeep. </p>
+
+<p>Selenium's source code is made available under the <a href="https://github.com/SeleniumHQ/selenium/blob/master/LICENSE">Apache 2.0 license</a>.</p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>Narrative documentation:</p>
+
+<ul>
+<li><a href="http://docs.seleniumhq.org/docs/">User Manual</a></li>
+<li>
+<a href="https://seleniumhq.github.io/docs/">New Handbook</a> (work in progress)</li>
+</ul>
+
+<p>API documentation:</p>
+
+<ul>
+<li><a href="http://seleniumhq.github.io/selenium/docs/api/dotnet/">C#</a></li>
+<li><a href="http://seleniumhq.github.io/selenium/docs/api/javascript/">JavaScript</a></li>
+<li><a href="http://seleniumhq.github.io/selenium/docs/api/java/index.html">Java</a></li>
+<li><a href="http://seleniumhq.github.io/selenium/docs/api/py/">Python</a></li>
+<li><a href="http://seleniumhq.github.io/selenium/docs/api/rb/">Ruby</a></li>
+</ul>
+
+<h2>
+<a id="pull-requests" class="anchor" href="#pull-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pull Requests</h2>
+
+<p>Please read <a href="https://github.com/SeleniumHQ/selenium/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> 
+before submitting your pull requests.</p>
+
+<h2>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Building</h2>
+
+<p>Selenium uses a custom build system aptly named
+<a href="https://github.com/SeleniumHQ/selenium/wiki/Crazy-Fun-Build">crazyfun</a>
+available on all fine platforms (Linux, Mac, Windows).  We are in the
+process of replacing crazyfun with
+<a href="http://facebook.github.io/buck/">buck</a>, so don't be alarmed if you
+see directories carrying multiple build directive files.
+For reference, crazyfun's build files are named <em>build.desc</em>,
+while buck's are named simply <em>BUCK</em>.</p>
+
+<p>Before building ensure that you have the 
+<a href="https://sites.google.com/a/chromium.org/chromedriver/downloads">most recent <code>chromedriver</code> </a>
+available on your <code>$PATH</code>.  </p>
+
+<p>To build Selenium, in the same directory as this file:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go build</pre></div>
+
+<p>The order of building modules is determined by the build system.
+If you want to build an individual module
+(assuming all dependent modules have previously been built),
+try the following:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go //javascript/atoms:<span class="pl-c1">test</span>:run</pre></div>
+
+<p>In this case, <code>javascript/atoms</code> is the module directory,
+<code>test</code> is a target in that directory's <code>build.desc</code> file,
+and <code>run</code> is the action to run on that target.</p>
+
+<p>As you see <em>build targets</em> scroll past in the log,
+you may want to run them individually.
+crazyfun can run them individually,
+by target name as long as <code>:run</code> is appended (see above).</p>
+
+<p>To list all available targets, you can append the <code>-T</code> flag:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go -T</pre></div>
+
+<h3>
+<a id="buck" class="anchor" href="#buck" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Buck</h3>
+
+<p>Although the plan is to return to a vanilla build of Buck as soon as
+possible, we currently use a fork hosted at
+<a href="https://github.com/SeleniumHQ/buck">https://github.com/SeleniumHQ/buck</a> To build using Buck, first clone that
+repo and build using ant. Then add Buck's "bin" directory to your
+PATH.</p>
+
+<p>To obtain a list of all available targets:</p>
+
+<div class="highlight highlight-source-shell"><pre>buck targets</pre></div>
+
+<p>And build a particular file:</p>
+
+<div class="highlight highlight-source-shell"><pre>buck build //java/client/src/org/openqa/selenium:webdriver-api</pre></div>
+
+<p>There are aliases for commonly invoked targets in the <code>.buckconfig</code>
+file, and these aliases can be invoked directly:</p>
+
+<div class="highlight highlight-source-shell"><pre>buck build htmlunit</pre></div>
+
+<p>All buck output is stored under "buck-out", with the outputs of build
+rules in <code>buck-out/gen</code>.</p>
+
+<p>If you are doing a number of incremental builds, then you may want to
+use <code>buckd</code>, which starts a long-lived buck process to watch outputs
+and input files. If you do this, consider using <code>watchman</code> too, since
+the Java 7 file watcher isn't terribly efficient. This can be cloned
+from <a href="https://github.com/facebook/watchman">https://github.com/facebook/watchman</a></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java 8 JDK</a></li>
+<li>
+<code>java</code> and <code>jar</code> on the PATH</li>
+</ul>
+
+<p>Although the build system is based on rake it's <strong>strongly advised</strong>
+to rely on the version of JRuby in <code>third_party/</code> that is invoked by
+<code>go</code>.  The only developer type who would want to deviate from this is
+the “build maintainer” who's experimenting with a JRuby upgrade.</p>
+
+<p>Note that all Selenium Java artefacts are <strong>built with Java 8
+(mandatory)</strong>.  Those <em>will work with any Java &gt;= 8</em>.</p>
+
+<h3>
+<a id="optional-requirements" class="anchor" href="#optional-requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Optional Requirements</h3>
+
+<ul>
+<li>Python 2.6.x to 2.7 (without this, Python tests will be skipped)</li>
+<li>Ruby 1.9.3</li>
+</ul>
+
+<h3>
+<a id="internet-explorer-driver" class="anchor" href="#internet-explorer-driver" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Internet Explorer Driver</h3>
+
+<p>If you plan to compile the
+<a href="https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver">IE driver</a>
+you also need:</p>
+
+<ul>
+<li><a href="http://www.microsoft.com/visualstudio/en-gb/products/2008-editions">Visual Studio 2008</a></li>
+<li>32 and 64 bit cross compilers</li>
+</ul>
+
+<p>The build will work on any platform, but the tests for IE will be 
+skipped silently, if you are not building on Windows.</p>
+
+<h2>
+<a id="common-tasks" class="anchor" href="#common-tasks" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common Tasks</h2>
+
+<p>For an express build of the binaries we release run the following from 
+the directory containing the <code>Rakefile</code>:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go release</pre></div>
+
+<p>All build output is placed under the <code>build</code> directory. The output can
+be found under <code>build/dist</code>.  If an error occurs while running this
+task complaining about a missing Albacore gem, the chances are you're
+using <code>rvm</code>.  If this is the case, switch to the system ruby:</p>
+
+<div class="highlight highlight-source-shell"><pre>rvm system</pre></div>
+
+<p>Of course, building the entire project can take too long. If you just
+want to build a single driver, then you can run one of these targets:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go chrome
+./go firefox
+./go htmlunit
+./go ie</pre></div>
+
+<p>As the build progresses, you'll see it report where the build outputs
+are being placed.  Of course, just building isn't enough.  We should
+really be able to run the tests too.  Try:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go test_chrome
+./go test_firefox
+./go test_htmlunit
+./go test_ie</pre></div>
+
+<p>Note that the <code>test_chrome</code> target requires that you have the separate
+<a href="https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver">Chrome Driver</a>
+binary available on your <code>PATH</code>.</p>
+
+<p>If you are interested in a single language binding, try one of:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go test_java
+./go test_dotnet
+./go test_rb
+./go test_javascript</pre></div>
+
+<p>To run all the tests just run:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go <span class="pl-c1">test</span></pre></div>
+
+<p>This will detect your OS and run all the tests that are known to be
+stable for every browser that's appropriate to use for all language
+bindings.  This can take a healthy amount of time to run.</p>
+
+<p>To run the minimal logical Selenium build:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go test_javascript test_java</pre></div>
+
+<p>As a side note, <strong>none of the developers</strong> run tests using
+<a href="http://www.cygwin.com/">Cygwin</a>.  It is very unlikely that the build
+will work as expected if you try and use it.</p>
+
+<h2>
+<a id="tour" class="anchor" href="#tour" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tour</h2>
+
+<p>The code base is generally segmented around the languages used to
+write the component.  Selenium makes extensive use of JavaScript, so
+let's start there.  Working on the JavaScript is easy.  First of all,
+start the development server:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go debug-server</pre></div>
+
+<p>Now navigate to
+<a href="http://localhost:2310/javascript">http://localhost:2310/javascript</a>.
+You'll find the contents of the <code>javascript/</code> directory being shown.
+We use the <a href="https://developers.google.com/closure/library/">Closure
+Library</a> for
+developing much of the javascript, so now navigate to
+<a href="http://localhost:2310/javascript/atoms/test">http://localhost:2310/javascript/atoms/test</a>.</p>
+
+<p>The tests in this directory are normal HTML files with names ending
+with <code>_test.html</code>.  Click on one to load the page and run the test. You
+can run all the javascript tests using:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go test_javascript</pre></div>
+
+<h2>
+<a id="maven-pom-files" class="anchor" href="#maven-pom-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maven POM files</h2>
+
+<p>Here is the <a href="http://repo1.maven.org/maven2/org/seleniumhq/selenium/">public Selenium Maven
+repository</a>.</p>
+
+<h2>
+<a id="build-output" class="anchor" href="#build-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build Output</h2>
+
+<p><code>./go</code> only makes a top-level <code>build</code> directory.  Outputs are placed
+under that relative to the target name. Which is probably best
+described with an example.  For the target:</p>
+
+<div class="highlight highlight-source-shell"><pre>./go //java/client/src/org/openqa/selenium:selenium-api</pre></div>
+
+<p>The output is found under:</p>
+
+<div class="highlight highlight-source-shell"><pre>build/java/client/src/org/openqa/selenium/selenium-api.jar</pre></div>
+
+<p>If you watch the build, each step should print where its output is
+going.  Java test outputs appear in one of two places: either under
+<code>build/test_logs</code> for <a href="http://junit.org/">JUnit</a> or in
+<code>build/build_log.xml</code> for <a href="http://testng.org/doc/index.html">TestNG</a>
+tests.  If you'd like the build to be chattier, just append <code>log=true</code>
+to the build command line.</p>
+
+<h1>
+<a id="help-with-go" class="anchor" href="#help-with-go" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help with <em>go</em>
+</h1>
+
+<p>More general, but basic, help for <em>go</em>…</p>
+
+<div class="highlight highlight-source-shell"><pre>./go --help</pre></div>
+
+<p>Remember, <em>go</em> is just a wrapper around
+<a href="http://rake.rubyforge.org/">Rake</a>, so you can use the standard
+commands such as <code>rake -T</code> to get more information about available
+targets.</p>
+
+<h2>
+<a id="maven-per-se" class="anchor" href="#maven-per-se" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maven <em>per se</em>
+</h2>
+
+<p>If it is not clear already, Selenium is not built with Maven, it is
+built with <a href="https://github.com/SeleniumHQ/buck">Buck</a>, 
+though that is invoked with <em>go</em> as outlined above so you do not really 
+have to learn too much about that.</p>
+
+<p>That said, it is possible to relatively quickly build selenium pieces
+for Maven to use. You are only really going to want to do this when
+you are testing the cutting-edge of Selenium development (which we
+welcome) against your application.  Here is the quickest way to build
+and deploy into you local maven repository (<code>~/.m2/repository</code>), while
+skipping Selenium's own tests.</p>
+
+<div class="highlight highlight-source-shell"><pre>./go maven-install</pre></div>
+
+<p>The maven jars should now be in your local ~/.m2/repository. You can also publish
+directly using Buck:</p>
+
+<div class="highlight highlight-source-shell"><pre>buck publish -r your-repo //java/client/src/org/openqa/selenium:selenium</pre></div>
+
+<p>This sequence will push some seven or so jars into your local Maven
+repository with something like 'selenium-server-3.0.0.jar' as
+the name.</p>
+
+<h2>
+<a id="useful-resources" class="anchor" href="#useful-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Useful Resources</h2>
+
+<p>Refer to the <a href="https://github.com/SeleniumHQ/selenium/wiki/Building-WebDriver">Building Web
+Driver</a> 
+wiki page for the last word on building the bits and pieces of Selenium.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/YOTOV-LIMITED/selenium">Selenium</a> is maintained by <a href="https://github.com/YOTOV-LIMITED">YOTOV-LIMITED</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
